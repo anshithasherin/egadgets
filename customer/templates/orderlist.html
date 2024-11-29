@@ -1,0 +1,46 @@
+{% extends 'navbar.html' %}
+{% block nav %}
+<h2>Orders</h2>
+{% if orders %}
+<div class="d-flex flex-column align-items-center">
+    {% for i in orders %}
+    <div class="container shadow border border-3 p-2 row mb-3 ">
+        <div class="col">
+            <img src="{{i.product.image.url}}" alt="" class="img-fluid">
+        </div>
+        <div class="col">
+            <h3>{{i.product.title}}</h3>
+            <h4>Order Price : {{i.product.price}}</h4>
+            <h4>Quantity : {{i.quantity}}</h4>
+            <h4>Order Date: {{i.datetime}}</h4>
+            <h4>
+                {% if i.status == 'Order placed' %}
+                <span class="text-warning">{{i.status}}</span>
+                <a href="{% url 'ocancel' i.id%}" class="btn btn-outline-danger">Cancel Order</a>
+                {% endif %}
+                {% if i.status == 'Shipped' %}
+                <span class="text-info">{{i.status}}</span>
+                <a href="{% url 'ocancel' i.id%}" class="btn btn-outline-danger">Cancel Order</a>
+                {% endif %}
+                {% if i.status == 'Out for delivery' %}
+                <span class="text-primary">{{i.status}}</span>
+                {% endif %}
+                {% if i.status == 'delivered' %}
+                <span class="text-success">{{i.status}}</span>
+                {% endif %}
+                {% if i.status == 'Cancelled' %}
+                <span class="text-danger">{{i.status}}</span>
+                {% endif %}
+
+            </h4>
+        
+        </div>
+
+    </div>
+
+    {% endfor %}
+</div>
+{% else %}
+    <h3 class="text-warning text-center m-4">No Order Placed</h3>
+{% endif %}
+{% endblock nav %}

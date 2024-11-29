@@ -1,0 +1,39 @@
+{% extends 'navbar.html' %}
+{% block nav %}
+{% if messages %}
+        {% for i in messages %}
+        {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{i}}</strong>
+            </div>
+        {% endif %}
+        {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{i}}</strong>
+             </div>
+{% endif %}
+{% endfor %}
+{% endif %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="row p-3 container border shadow border-3" style="height: 60vh;">
+            <div class="col d-flex align-items-center justify-content-center"  >
+                <img src="{{products.image.url}}" alt="" class="img-fluid">
+            </div>
+            <div class="col d-flex flex-column justify-content-center ">
+                <h2>{{products.title}}</h2>
+                <p>{{products.description}}</p>
+                <h5>{{products.price}}</h5>
+                <h6>{{products.category}}</h6>
+                <div class="d-grid">
+                    <a href="{% url 'cart' products.id %}" class="btn btn-outline-success" style="font-weight: bolder;">
+                        <i class="fa-solid fa-cart-shopping fa-lg" style="color: #4323c6;"></i>
+                        Add to Cart</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock nav %}

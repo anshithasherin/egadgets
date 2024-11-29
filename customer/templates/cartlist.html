@@ -1,0 +1,64 @@
+{% extends 'navbar.html' %}
+{% block nav %}
+<h3>Cart list</h3>
+{% if messages %}
+        {% for i in messages %}
+        {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{i}}</strong>
+            </div>
+        {% endif %}
+        {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{i}}</strong>
+             </div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if carts %}
+<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Image</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Date and Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in carts %}
+        <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.product.title}}</td>
+        <td>
+            <img src="{{i.product.image.url}}" alt="" style="height: 150px;">
+        </td>
+        <td>{{i.product.price}}</td>
+        <td>
+            <a href="{% url 'decrsqnty' i.id%}" class="btn">-</a>
+            <span class="p-1 boreder">
+                {{i.quantity}}
+            </span>
+                <a href="{% url 'incrsqnty' i.id%}" class="btn">+</a>
+        </td>
+        <td>{{i.datetime}}</td>
+        <td>
+            <a href="{% url 'porder' i.id%}" onclick="confirm('Are You Sure?')" class="btn btn-outline-info">Place Order</a>
+            <a href="{% url 'deleteitem' i.id%}" class="btn"><i class="fa-solid fa-trash fa-xl" style="color: #4237b4;"></i></a>
+        </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table>
+{% else %}
+    <h3 class="text-warning text-center m-4">No Item Added to Cart! </h3>
+{% endif %}
+
+
+{% endblock nav %}
